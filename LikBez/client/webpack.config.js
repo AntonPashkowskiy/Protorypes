@@ -14,9 +14,9 @@ module.exports = {
         rules: [
             {
                 enforce: "pre",
-                test: /\.js?$/,
-                include: __dirname,
-                exclude: [/node_modules/, /public/, /build/],
+                test: /\.jsx?$/,
+                include: path.join(__dirname, "src"),
+                exclude: [/node_modules/, /public/],
                 loader: "eslint-loader",
                 options: {
                     formatter: require("eslint-friendly-formatter"),
