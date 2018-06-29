@@ -20,9 +20,9 @@ module.exports = {
                 loader: "eslint-loader",
                 options: {
                     formatter: require("eslint-friendly-formatter"),
-                    emitWarning: true,
+                    emitWarning: false,
                     emitError: true,
-                    failOnWarning: true,
+                    failOnWarning: false,
                     failOnError: true
                 }
             },
