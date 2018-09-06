@@ -23,7 +23,7 @@ export default class CodeEditor extends PureComponent {
 
 	render() {
 		const { uniqueName } = this;
-		const { theme, language } = this.props;
+		const { theme, language, width, height } = this.props;
 		const toPluginTheme = {
 			[CODE_EDITOR_THEME.DARK]: "monokai",
 			[CODE_EDITOR_THEME.LIGHT]: "xcode"
@@ -31,6 +31,8 @@ export default class CodeEditor extends PureComponent {
 
 		return (
 			<AceEditor
+				width={`${width}px`}
+				height={`${height}px`}
 				name={uniqueName}
 				mode={language}
 				theme={toPluginTheme[theme]}

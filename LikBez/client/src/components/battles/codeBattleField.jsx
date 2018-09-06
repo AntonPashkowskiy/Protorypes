@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 
 import TasksPanel from "./tasksPanel.jsx";
 import CodeEditor from "./codeEditor.jsx";
+import ParentSize from "../responsive/ParentSize.jsx";
 import { CODE_EDITOR_THEME, PROGRAMMING_LANGUAGE } from "./constants";
+
+import "./codeBattleField.less";
 
 export default class CodeBattlesField extends PureComponent {
 	constructor(props) {
@@ -23,9 +26,14 @@ export default class CodeBattlesField extends PureComponent {
 						<TasksPanel data={currentUserTasksPanel}/>
 					</div>
 					<div className="code-editor-container">
-						<CodeEditor
-							theme={CODE_EDITOR_THEME.LIGHT}
-							language={PROGRAMMING_LANGUAGE.C_CPP}/>
+						<ParentSize>
+							{props => (
+								<CodeEditor
+									{...props}
+									theme={CODE_EDITOR_THEME.DARK}
+									language={PROGRAMMING_LANGUAGE.C_CPP}/>
+							)}
+						</ParentSize>
 					</div>
 					<div className="task-panel-container">
 						<TasksPanel data={opponentTasksPanel}/>
