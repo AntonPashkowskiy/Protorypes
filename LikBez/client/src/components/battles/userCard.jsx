@@ -7,7 +7,17 @@ export default class UserCard extends PureComponent {
 	}
 
 	render() {
-		return null;
+		const { username, rating, avatar } = this.props;
+
+		return (
+			<div className="user-card">
+				<img className="avatar" src={avatar} alt="user"/>
+				<div className="user-info">
+					<span className="user-name">{username}</span>
+					<span className="rating">{rating}</span>
+				</div>
+			</div>
+		);
 	}
 }
 

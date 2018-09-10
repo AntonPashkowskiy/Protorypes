@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import AceEditor from "react-ace";
 import brace from "brace";
 
-import { CODE_EDITOR_THEME, PROGRAMMING_LANGUAGE } from "./constants";
 import * as randomHelper from "../../helpers/randomHelper";
 
 import "brace/mode/javascript";
@@ -13,6 +12,18 @@ import "brace/mode/c_cpp";
 
 import "brace/theme/monokai";
 import "brace/theme/xcode";
+
+export const CODE_EDITOR_THEME = {
+	DARK: "dark",
+	LIGHT: "light"
+};
+
+export const PROGRAMMING_LANGUAGE = {
+	JS: "javascript",
+	C_CPP: "c_cpp",
+	PYTHON: "python",
+	JAVA: "java"
+};
 
 export default class CodeEditor extends PureComponent {
 	constructor(props) {

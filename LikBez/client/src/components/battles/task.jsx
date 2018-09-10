@@ -1,22 +1,43 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
+import { ATTEMPT } from "../../constants"; 
+
 export default class Task extends PureComponent {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		return null;
+		const { taskName, attempts } = this.props;
+		const attemptToClass = {
+			[ATTEMPT.SUCCESS]: "success",
+			[ATTEMPT.FAILED]: "failed",
+			[ATTEMPT.UNUSED]: "unused"
+		};
+
+		return (
+			<React.Fragment>
+				<li className="task">
+					<span className="task-name">{taskName}</span>
+					<ul className="attempts">
+						<li className={attemptToClass[attempts[0]]}></li>
+						<li className={attemptToClass[attempts[1]]}></li>
+						<li className={attemptToClass[attempts[2]]}></li>
+					</ul>
+				</li>
+			</React.Fragment>
+		);
 	}
 }
 
 Task.defaultProps = {
-	spendedTime: ""
+	spendedTime: 0
 };
 
 Tasks.propTypes = {
 	taskName: PropTypes.string.isRequired,
-	spendedTime: PropTypes.string,
-	attempts: PropTypes.arrayOf(PropTypes.object)
+	spendedTime: PropTypes.number,
+	attempts: PropTypes.arrayOf(PropTypes.bool),
+	existingCode: PropTypes.string
 };
