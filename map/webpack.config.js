@@ -78,5 +78,10 @@ module.exports = {
                 loader: "file-loader?name=fonts/[name].[ext]"
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            _: "lodash"
+        })
+    ]
 };

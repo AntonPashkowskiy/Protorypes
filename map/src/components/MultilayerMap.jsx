@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { ParentSize } from "@vx/responsive";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Cluster, Marker } from "react-mapbox-gl";
 
 import "./MultilayerMap.less";
 
@@ -17,24 +17,49 @@ export default class MultilayerMap extends PureComponent {
 	componentDidUpdate() {
 	}
 
+	getBoundsCoordinates(coordinates) {
+		const precision = 0.1;
+
+		const maxLongtitude = _.max(_.map(coordinates, coordinate => coordinate[0]));
+		const minLongtitude = _.min(_.map(coordinates, coordinate => coordinate[0]));
+		const longtitudePadding = (maxLongtitude - minLongtitude) * precision;
+
+		const maxLatitude = _.max(_.map(coordinates, coordinate => coordinate[1]));
+		const minLatitude = _.min(_.map(coordinates, coordinate => coordinate[1]));
+		const latitudePadding = (maxLatitude - minLatitude) * precision;
+
+		return [
+			[maxLongtitude + longtitudePadding, maxLatitude + latitudePadding],
+			[minLongtitude - longtitudePadding, minLatitude - latitudePadding]
+		];
+	}
+
 	renderMap(width, height, config) {
 		const Map = ReactMapboxGl({
-			accessToken: "pk.eyJ1IjoiYW50b24tcGFzaGtvdXNraSIsImEiOiJjam1hYjduZnUwOGphM3BvZ3Vwc3hsM3NrIn0.uP22N1el75_qWLJnCtAJXg"
+			accessToken: "pk.eyJ1IjoiYW50b24tcGFzaGtvdXNraSIsImEiOiJjam1hYjduZnUwOGphM3BvZ3Vwc3hsM3NrIn0.uP22N1el75_qWLJnCtAJXg",
+			scrollZoom: false,
+			doubleClickZoom: false
 		});
 
 		return (
 			<Map
-			style="mapbox://styles/mapbox/streets-v9"
-			containerStyle={{
-				width: `${width}px`,
-				height: `${height}px`
-			}}>
-				<Layer
-					type="symbol"
-					id="marker"
-					layout={{ "icon-image": "marker-15" }}>
-					<Feature coordinates={[-0.481747846041145, 51.3233379650232]}/>
-				</Layer>
+				style="mapbox://styles/mapbox/streets-v9"
+				fitBounds={this.getBoundsCoordinates(config.rootLayer.coordinates)}
+				containerStyle={{
+					width: `${width}px`,
+					height: `${height}px`
+				}}>
+					<Layer type="circle" id="marker" paint={{
+						"circle-radius": 12,
+						"circle-color": "#D71920",
+						"circle-stroke-width": 4,
+						"circle-stroke-color": "#000000",
+						"circle-stroke-opacity": 0.5
+					}}>
+						{config.rootLayer.coordinates.map((coordinate, index) => (
+							<Feature key={index} coordinates={coordinate}/>
+						))}
+					</Layer>
 			</Map>
 		);
 	}
@@ -51,5 +76,5 @@ export default class MultilayerMap extends PureComponent {
 }
 
 MultilayerMap.propTypes = {
-	config: PropTypes.object
+	config: PropTypes.object.isRequired
 };
