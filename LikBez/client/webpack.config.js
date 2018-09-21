@@ -37,7 +37,7 @@ module.exports = {
                 loader: "babel-loader",
                 exclude: [/node_modules/, /public/],
                 options:{
-                    presets:["env", "react"]
+                    presets:["env", "react", "es2015", "stage-2"]
                 }
             },
             {
@@ -78,5 +78,10 @@ module.exports = {
                 loader: "file-loader?name=fonts/[name].[ext]"
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            _: "lodash"
+        })
+    ]
 };
